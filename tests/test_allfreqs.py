@@ -2,39 +2,30 @@
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
 import pytest
+from allfreqs.classes import Multialignment, Reference
+import os
+from pandas.testing import assert_frame_equal
 
-from click.testing import CliRunner
-
-from allfreqs import allfreqs
-from allfreqs import cli
-
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/robertopreste/cc-pypackage')
+DATADIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+class TestMultialignment:
+    seq_path = os.path.join(DATADIR, "sample_multialg.fasta")
+    m = Multialignment(seq_path)
+
+    def test_msa(self):
+        assert self.m.msa == self.seq_path
+
+    def test_df(self, sample_sequences_df):
+        assert_frame_equal(self.m.df, sample_sequences_df)
 
 
-def test_cli():
-    """Test the CLI."""
-    runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert "allfreqs.cli.main" in result.output
+class TestReference:
+    ref_path = os.path.join(DATADIR, "sample_ref.fasta")
+    r = Reference(ref_path)
 
-def test_cli_help():
-    """Test the CLI help."""
-    runner = CliRunner()
-    result = runner.invoke(cli.main, ['--help'])
-    assert result.exit_code == 0
-    assert "--help  Show this message and exit." in result.output
+    def test_input_file(self):
+        assert self.r.input_file == self.ref_path
+
+    def test_indexes(self, sample_reference_indexes):
+        assert self.r.indexes == sample_reference_indexes
