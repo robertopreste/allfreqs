@@ -12,5 +12,5 @@ pytest==4.3.0
 pytest-runner==4.2
 
 pandas
-modin
 scikit-bio
+cached-property

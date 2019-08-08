@@ -6,3 +6,8 @@ History
 ------------------
 
 * First release.
+
+0.1.1 (2019-08-08)
+==================
+
+* Read and process multialignments from fasta and csv files (Python module only).

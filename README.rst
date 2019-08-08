@@ -23,7 +23,6 @@ allfreqs
         :target: https://allfreqs.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-
 .. image:: https://pyup.io/repos/github/robertopreste/allfreqs/shield.svg
      :target: https://pyup.io/repos/github/robertopreste/allfreqs/
      :alt: Updates
@@ -31,8 +30,6 @@ allfreqs
 .. image:: https://pyup.io/repos/github/robertopreste/allfreqs/python-3-shield.svg
      :target: https://pyup.io/repos/github/robertopreste/allfreqs/
      :alt: Python 3
-
-
 
 .. image:: https://pepy.tech/badge/allfreqs
     :target: https://pepy.tech/project/allfreqs
@@ -53,7 +50,7 @@ Calculate allele frequency from a sequence multialignment.
 Features
 --------
 
-* TODO
+Calculate allele frequencies from a nucleotide multialignment in fasta or csv format.
 
 Credits
 -------
