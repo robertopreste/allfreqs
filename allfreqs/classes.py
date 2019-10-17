@@ -21,7 +21,8 @@ class MultiAlignment:
 
         The resulting dataframe will be used to calculate allele frequencies.
         """
-        df = pd.DataFrame.from_dict(self.msa, orient="index", columns=["sequence"])
+        df = pd.DataFrame.from_dict(self.msa,
+                                    orient="index", columns=["sequence"])
         df.reset_index(inplace=True)
         df.rename({"index": "id"}, axis=1, inplace=True)
 

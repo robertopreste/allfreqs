@@ -45,8 +45,6 @@ class AlleleFreqs:
             refer = Sequence.read(reference)
             multialg = {seq.metadata.get("id"): str(seq) for seq in msa}
 
-        # self.reference = Reference(refer)
-        # self.multialg = MultiAlignment(multialg)
         ref = Reference(refer)
         alg = MultiAlignment(multialg)
 
@@ -86,8 +84,6 @@ class AlleleFreqs:
             refer = refer.iloc[0, 1]
             multialg = dict(zip(msa.iloc[:, 0], msa.iloc[:, 1]))
 
-        # self.reference = Reference(refer)
-        # self.multialg = MultiAlignment(multialg)
         ref = Reference(refer)
         alg = MultiAlignment(multialg)
 
