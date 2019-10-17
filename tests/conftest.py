@@ -152,3 +152,15 @@ def sample_sequences_freqs():
 def sample_frequencies_csv():
     df = pd.read_csv(os.path.join(DATADIR, "sample_frequencies.csv"))
     return df
+
+
+@pytest.fixture
+def alg_X_frequencies_csv():
+    df = pd.read_csv(os.path.join(DATADIR, "real_datasets", "frequencies_X.csv"))
+    return df
+
+
+@pytest.fixture
+def alg_L6_frequencies_csv():
+    df = pd.read_csv(os.path.join(DATADIR, "real_datasets", "frequencies_L6.csv"))
+    return df

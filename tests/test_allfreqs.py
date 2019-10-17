@@ -12,7 +12,7 @@ DATADIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
 TEST_CSV = os.path.join(DATADIR, "test.csv")
 
 
-class TestAlleleFreqsBasic:
+class TestBasic:
     ref = Reference("AAG-CTNGGGCATTTCAGGGTGAGCCCGGGCAATACAGGG-TAT")
     d = {"seq1": "AAGGCTNGGGCATTTCAGGGTGAGCCCGGGCAATACAGGG-TAT",
          "seq2": "AAGGCCTTGGCAGTGCAGGGTGAGCCGTGGCCGGGCACGGATAT",
@@ -34,9 +34,12 @@ class TestAlleleFreqsBasic:
         assert_frame_equal(result, sample_frequencies_csv)
 
 
-class TestAlleleFreqsFasta:
-    a = AlleleFreqs.from_fasta(sequences=os.path.join(DATADIR, "sample_multialg.fasta"),
-                               reference=os.path.join(DATADIR, "sample_ref.fasta"))
+# From Fasta
+
+class TestFromFasta:
+    a = AlleleFreqs.from_fasta(
+        sequences=os.path.join(DATADIR, "sample_multialg.fasta")
+    )
 
     def test_df(self, sample_sequences_df):
         assert_frame_equal(self.a.df, sample_sequences_df)
@@ -50,9 +53,11 @@ class TestAlleleFreqsFasta:
         assert_frame_equal(result, sample_frequencies_csv)
 
 
-class TestAlleleFreqsWithRefFasta:
-    a = AlleleFreqs.from_fasta(sequences=os.path.join(DATADIR,
-                                                      "sample_multialg_with_ref.fasta"))
+class TestFromFastaNoRef:
+    a = AlleleFreqs.from_fasta(
+        sequences=os.path.join(DATADIR, "sample_multialg_noref.fasta"),
+        reference=os.path.join(DATADIR, "sample_ref.fasta")
+    )
 
     def test_df(self, sample_sequences_df):
         assert_frame_equal(self.a.df, sample_sequences_df)
@@ -66,9 +71,12 @@ class TestAlleleFreqsWithRefFasta:
         assert_frame_equal(result, sample_frequencies_csv)
 
 
-class TestAlleleFreqsCsv:
-    a = AlleleFreqs.from_csv(sequences=os.path.join(DATADIR, "sample_multialg.csv"),
-                             reference=os.path.join(DATADIR, "sample_ref.csv"))
+# From Csv
+
+class TestFromCsv:
+    a = AlleleFreqs.from_csv(
+        sequences=os.path.join(DATADIR, "sample_multialg.csv")
+    )
 
     def test_df(self, sample_sequences_df):
         assert_frame_equal(self.a.df, sample_sequences_df)
@@ -82,9 +90,11 @@ class TestAlleleFreqsCsv:
         assert_frame_equal(result, sample_frequencies_csv)
 
 
-class TestAlleleFreqsWithRefCsv:
-    a = AlleleFreqs.from_csv(sequences=os.path.join(DATADIR,
-                                                    "sample_multialg_with_ref.csv"))
+class TestFromCsvNoRef:
+    a = AlleleFreqs.from_csv(
+        sequences=os.path.join(DATADIR, "sample_multialg_noref.csv"),
+        reference=os.path.join(DATADIR, "sample_ref.csv")
+    )
 
     def test_df(self, sample_sequences_df):
         assert_frame_equal(self.a.df, sample_sequences_df)
@@ -96,3 +106,59 @@ class TestAlleleFreqsWithRefCsv:
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
         assert_frame_equal(result, sample_frequencies_csv)
+
+
+# Real Datasets
+
+class TestRealDatasetsX:
+    a = AlleleFreqs.from_fasta(
+        sequences=os.path.join(DATADIR, "real_datasets", "alg_X.fasta")
+    )
+
+    # TODO: test_df() and test_freqs() functions
+
+    def test_to_csv(self, alg_X_frequencies_csv):
+        self.a.to_csv(TEST_CSV)
+        result = pd.read_csv(TEST_CSV)
+        assert_frame_equal(result, alg_X_frequencies_csv)
+
+
+class TestRealDatasetsXNoRef:
+    a = AlleleFreqs.from_fasta(
+        sequences=os.path.join(DATADIR, "real_datasets", "alg_X_noref.fasta"),
+        reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta")
+    )
+
+    # TODO: test_df() and test_freqs() functions
+
+    def test_to_csv(self, alg_X_frequencies_csv):
+        self.a.to_csv(TEST_CSV)
+        result = pd.read_csv(TEST_CSV)
+        assert_frame_equal(result, alg_X_frequencies_csv)
+
+
+class TestRealDatasetsL6:
+    a = AlleleFreqs.from_fasta(
+        sequences=os.path.join(DATADIR, "real_datasets", "alg_L6.fasta")
+    )
+
+    # TODO: test_df() and test_freqs() functions
+
+    def test_to_csv(self, alg_L6_frequencies_csv):
+        self.a.to_csv(TEST_CSV)
+        result = pd.read_csv(TEST_CSV)
+        assert_frame_equal(result, alg_L6_frequencies_csv)
+
+
+class TestRealDatasetsL6NoRef:
+    a = AlleleFreqs.from_fasta(
+        sequences=os.path.join(DATADIR, "real_datasets", "alg_L6_noref.fasta"),
+        reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta"))
+
+    # TODO: test_df() and test_freqs() functions
+
+    def test_to_csv(self, alg_L6_frequencies_csv):
+        self.a.to_csv(TEST_CSV)
+        result = pd.read_csv(TEST_CSV)
+        assert_frame_equal(result, alg_L6_frequencies_csv)
+
