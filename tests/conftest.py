@@ -161,6 +161,20 @@ def alg_X_frequencies_csv():
 
 
 @pytest.fixture
+def alg_X_df():
+    df = pd.read_csv(os.path.join(DATADIR, "real_datasets", "alg_X_df.csv"),
+                     index_col=0)
+    return df
+
+
+@pytest.fixture
 def alg_L6_frequencies_csv():
     df = pd.read_csv(os.path.join(DATADIR, "real_datasets", "frequencies_L6.csv"))
+    return df
+
+
+@pytest.fixture
+def alg_L6_df():
+    df = pd.read_csv(os.path.join(DATADIR, "real_datasets", "alg_L6_df.csv"),
+                     index_col=0)
     return df

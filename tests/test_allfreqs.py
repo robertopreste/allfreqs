@@ -25,7 +25,7 @@ class TestBasic:
     def test_df(self, sample_sequences_df):
         assert_frame_equal(self.a.df, sample_sequences_df)
 
-    def test_frequencies(self, sample_sequences_freqs):
+    def test_freqs(self, sample_sequences_freqs):
         assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
 
     def test_to_csv(self, sample_frequencies_csv):
@@ -115,7 +115,11 @@ class TestRealDatasetsX:
         sequences=os.path.join(DATADIR, "real_datasets", "alg_X.fasta")
     )
 
-    # TODO: test_df() and test_freqs() functions
+    def test_df(self, alg_X_df):
+        assert_frame_equal(self.a.df, alg_X_df)
+
+    def test_freqs(self, alg_X_frequencies_csv):
+        assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
 
     def test_to_csv(self, alg_X_frequencies_csv):
         self.a.to_csv(TEST_CSV)
@@ -129,7 +133,11 @@ class TestRealDatasetsXNoRef:
         reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta")
     )
 
-    # TODO: test_df() and test_freqs() functions
+    def test_df(self, alg_X_df):
+        assert_frame_equal(self.a.df, alg_X_df)
+
+    def test_freqs(self, alg_X_frequencies_csv):
+        assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
 
     def test_to_csv(self, alg_X_frequencies_csv):
         self.a.to_csv(TEST_CSV)
@@ -142,7 +150,11 @@ class TestRealDatasetsL6:
         sequences=os.path.join(DATADIR, "real_datasets", "alg_L6.fasta")
     )
 
-    # TODO: test_df() and test_freqs() functions
+    def test_df(self, alg_L6_df):
+        assert_frame_equal(self.a.df, alg_L6_df)
+
+    def test_freqs(self, alg_L6_frequencies_csv):
+        assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
 
     def test_to_csv(self, alg_L6_frequencies_csv):
         self.a.to_csv(TEST_CSV)
@@ -155,7 +167,11 @@ class TestRealDatasetsL6NoRef:
         sequences=os.path.join(DATADIR, "real_datasets", "alg_L6_noref.fasta"),
         reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta"))
 
-    # TODO: test_df() and test_freqs() functions
+    def test_df(self, alg_L6_df):
+        assert_frame_equal(self.a.df, alg_L6_df)
+
+    def test_freqs(self, alg_L6_frequencies_csv):
+        assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
 
     def test_to_csv(self, alg_L6_frequencies_csv):
         self.a.to_csv(TEST_CSV)
