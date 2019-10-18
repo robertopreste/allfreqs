@@ -1,5 +1,11 @@
-Welcome to allfreqs's documentation!
-======================================
+======================
+allfreqs documentation
+======================
+
+allfreqs is a Python package to calculate allele frequencies from a nucleotide multialignment in fasta or csv format.
+
+Table of Contents
+=================
 
 .. toctree::
    :maxdepth: 2
@@ -9,7 +15,6 @@ Welcome to allfreqs's documentation!
    installation
    usage
    api
-   modules
    contributing
    authors
    history

@@ -4,7 +4,7 @@ Installation
 
 
 Stable release
---------------
+==============
 
 To install allfreqs, run this command in your terminal:
 
@@ -22,7 +22,7 @@ you through the process.
 
 
 From sources
-------------
+============
 
 The sources for allfreqs can be downloaded from the `Github repo`_.
 
