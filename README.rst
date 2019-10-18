@@ -25,7 +25,7 @@ allfreqs
    :target: https://saythanks.io/to/robertopreste
 
 
-Calculate allele frequency from a sequence multialignment.
+Calculate allele frequencies from a sequence multialignment.
 
 
 * Free software: MIT license
