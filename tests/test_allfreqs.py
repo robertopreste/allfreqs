@@ -20,7 +20,7 @@ class TestBasic:
          "seq4": "AAA-CCCTTGCCGTTACGCTTAAACCGAGGCCGGGACACT-CAT",
          "seq5": "AAAGCCCTTGCCGGTACGCTTAAACCATTGCCGGTACGCT-TAA"}
     alg = MultiAlignment(d)
-    a = AlleleFreqs(reference=ref, multialg=alg)
+    a = AlleleFreqs(multialg=alg, reference=ref)
 
     def test_df(self, sample_sequences_df):
         assert_frame_equal(self.a.df, sample_sequences_df)

@@ -17,9 +17,12 @@ class AlleleFreqs:
     is needed, either in fasta or csv format.
     """
 
-    def __init__(self, reference, multialg):
-        self.reference = reference
+    def __init__(self, multialg, reference):
         self.multialg = multialg
+        self.reference = reference
+        if len(self.multialg.tabmsa.sequence[0]) != len(self.reference):
+            raise ValueError("Reference and aligned sequences must have "
+                             "the same length.")
 
     @classmethod
     def from_fasta(cls,
@@ -48,7 +51,7 @@ class AlleleFreqs:
         ref = Reference(refer)
         alg = MultiAlignment(multialg)
 
-        return cls(reference=ref, multialg=alg)
+        return cls(multialg=alg, reference=ref)
 
     @classmethod
     def from_csv(cls,
@@ -87,7 +90,7 @@ class AlleleFreqs:
         ref = Reference(refer)
         alg = MultiAlignment(multialg)
 
-        return cls(reference=ref, multialg=alg)
+        return cls(multialg=alg, reference=ref)
 
     @cached_property
     def df(self) -> pd.DataFrame:
@@ -105,7 +108,9 @@ class AlleleFreqs:
     def frequencies(self) -> pd.DataFrame:
         """Calculate allele frequencies for the 4 basic nucleotides,
         gaps and other (non-canonical) nucleotides."""
-        var_df = pd.DataFrame(columns=["A", "C", "G", "T", "gap", "oth"])
+        rows = []
+        cols = ["A", "C", "G", "T", "gap", "oth"]
+        idxs = []
         for col in self.df.columns:
             freqs = self.df[col].value_counts(normalize=True)
             freq_A = freqs.get("A", 0.0)
@@ -114,11 +119,10 @@ class AlleleFreqs:
             freq_T = freqs.get("T", 0.0)
             freq_gap = freqs.get("-", 0.0)
             freq_oth = 1.0 - (freq_A + freq_C + freq_G + freq_T + freq_gap)
-            var_df = pd.concat([var_df,
-                                pd.DataFrame({"A": freq_A, "C": freq_C,
-                                              "G": freq_G, "T": freq_T,
-                                              "gap": freq_gap, "oth": freq_oth},
-                                             index=[col])])
+            rows.append({"A": freq_A, "C": freq_C, "G": freq_G, "T": freq_T,
+                         "gap": freq_gap, "oth": freq_oth})
+            idxs.append(col)
+        var_df = pd.DataFrame(rows, columns=cols, index=idxs)
         var_df.reset_index(inplace=True)
         var_df.rename({"index": "position"}, axis=1, inplace=True)
 
@@ -131,3 +135,8 @@ class AlleleFreqs:
             output_file: output file name
         """
         self.frequencies.to_csv(output_file, index=False)
+
+    def __repr__(self):
+        n_seqs = self.multialg.tabmsa.shape[0]
+        n_pos = len(self.reference)
+        return "<AlleleFreqs ({} sequences, {} positions)>".format(n_seqs, n_pos)

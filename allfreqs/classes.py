@@ -13,7 +13,7 @@ class MultiAlignment:
     """
 
     def __init__(self, msa: Dict[str, str]):
-        self.msa = msa
+        self._msa = msa
 
     @property
     def tabmsa(self) -> pd.DataFrame:
@@ -21,7 +21,7 @@ class MultiAlignment:
 
         The resulting dataframe will be used to calculate allele frequencies.
         """
-        df = pd.DataFrame.from_dict(self.msa,
+        df = pd.DataFrame.from_dict(self._msa,
                                     orient="index", columns=["sequence"])
         df.reset_index(inplace=True)
         df.rename({"index": "id"}, axis=1, inplace=True)
@@ -40,7 +40,7 @@ class Reference:
     """
 
     def __init__(self, ref):
-        self.ref = str(ref)
+        self._ref = str(ref)
 
     @property
     def indexes(self) -> List[str]:
@@ -54,7 +54,7 @@ class Reference:
         indexes = []
         n = 0
         i = 0
-        for nt in self.ref:
+        for nt in self._ref:
             if nt != "-":  # non-gap position
                 i = 0
                 n += 1
@@ -65,4 +65,7 @@ class Reference:
         return indexes
 
     def __repr__(self):
-        return self.ref
+        return self._ref
+
+    def __len__(self):
+        return len(self._ref)
