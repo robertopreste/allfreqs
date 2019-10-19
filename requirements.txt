@@ -16,4 +16,4 @@ pytest-runner==5.1
 numpy
 pandas
 scikit-bio
-cached-property
+cached-property==1.5.1
