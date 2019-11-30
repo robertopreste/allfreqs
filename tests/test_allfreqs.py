@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-import pytest
 import os
+import pytest
+
 import pandas as pd
-from pandas.testing import assert_frame_equal
+import pandas.testing as pdtest
+
 from allfreqs import AlleleFreqs
 from allfreqs.classes import Reference, MultiAlignment
 
@@ -23,15 +25,15 @@ class TestBasic:
     a = AlleleFreqs(multialg=alg, reference=ref)
 
     def test_df(self, sample_sequences_df):
-        assert_frame_equal(self.a.df, sample_sequences_df)
+        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
 
     def test_freqs(self, sample_sequences_freqs):
-        assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
 
     def test_to_csv(self, sample_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, sample_frequencies_csv)
 
 
 # From Fasta
@@ -42,15 +44,15 @@ class TestFromFasta:
     )
 
     def test_df(self, sample_sequences_df):
-        assert_frame_equal(self.a.df, sample_sequences_df)
+        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
 
     def test_freqs(self, sample_sequences_freqs):
-        assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
 
     def test_to_csv(self, sample_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, sample_frequencies_csv)
 
 
 class TestFromFastaNoRef:
@@ -60,15 +62,15 @@ class TestFromFastaNoRef:
     )
 
     def test_df(self, sample_sequences_df):
-        assert_frame_equal(self.a.df, sample_sequences_df)
+        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
 
     def test_freqs(self, sample_sequences_freqs):
-        assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
 
     def test_to_csv(self, sample_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, sample_frequencies_csv)
 
 
 # From Csv
@@ -79,15 +81,15 @@ class TestFromCsv:
     )
 
     def test_df(self, sample_sequences_df):
-        assert_frame_equal(self.a.df, sample_sequences_df)
+        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
 
     def test_freqs(self, sample_sequences_freqs):
-        assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
 
     def test_to_csv(self, sample_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, sample_frequencies_csv)
 
 
 class TestFromCsvNoRef:
@@ -97,15 +99,15 @@ class TestFromCsvNoRef:
     )
 
     def test_df(self, sample_sequences_df):
-        assert_frame_equal(self.a.df, sample_sequences_df)
+        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
 
     def test_freqs(self, sample_sequences_freqs):
-        assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
 
     def test_to_csv(self, sample_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, sample_frequencies_csv)
 
 
 # Real Datasets
@@ -116,15 +118,15 @@ class TestRealDatasetsX:
     )
 
     def test_df(self, alg_X_df):
-        assert_frame_equal(self.a.df, alg_X_df)
+        pdtest.assert_frame_equal(self.a.df, alg_X_df)
 
     def test_freqs(self, alg_X_frequencies_csv):
-        assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
+        pdtest.assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
 
     def test_to_csv(self, alg_X_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, alg_X_frequencies_csv)
+        pdtest.assert_frame_equal(result, alg_X_frequencies_csv)
 
 
 class TestRealDatasetsXNoRef:
@@ -134,15 +136,15 @@ class TestRealDatasetsXNoRef:
     )
 
     def test_df(self, alg_X_df):
-        assert_frame_equal(self.a.df, alg_X_df)
+        pdtest.assert_frame_equal(self.a.df, alg_X_df)
 
     def test_freqs(self, alg_X_frequencies_csv):
-        assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
+        pdtest.assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
 
     def test_to_csv(self, alg_X_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, alg_X_frequencies_csv)
+        pdtest.assert_frame_equal(result, alg_X_frequencies_csv)
 
 
 class TestRealDatasetsL6:
@@ -151,15 +153,15 @@ class TestRealDatasetsL6:
     )
 
     def test_df(self, alg_L6_df):
-        assert_frame_equal(self.a.df, alg_L6_df)
+        pdtest.assert_frame_equal(self.a.df, alg_L6_df)
 
     def test_freqs(self, alg_L6_frequencies_csv):
-        assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
+        pdtest.assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
 
     def test_to_csv(self, alg_L6_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, alg_L6_frequencies_csv)
+        pdtest.assert_frame_equal(result, alg_L6_frequencies_csv)
 
 
 class TestRealDatasetsL6NoRef:
@@ -168,13 +170,12 @@ class TestRealDatasetsL6NoRef:
         reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta"))
 
     def test_df(self, alg_L6_df):
-        assert_frame_equal(self.a.df, alg_L6_df)
+        pdtest.assert_frame_equal(self.a.df, alg_L6_df)
 
     def test_freqs(self, alg_L6_frequencies_csv):
-        assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
+        pdtest.assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
 
     def test_to_csv(self, alg_L6_frequencies_csv):
         self.a.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        assert_frame_equal(result, alg_L6_frequencies_csv)
-
+        pdtest.assert_frame_equal(result, alg_L6_frequencies_csv)
