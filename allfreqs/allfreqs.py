@@ -139,4 +139,5 @@ class AlleleFreqs:
     def __repr__(self):
         n_seqs = self.multialg.tabmsa.shape[0]
         n_pos = len(self.reference)
-        return "<AlleleFreqs ({} sequences, {} positions)>".format(n_seqs, n_pos)
+        return "<AlleleFreqs ({} sequences, {} positions)>".format(n_seqs,
+                                                                   n_pos)
