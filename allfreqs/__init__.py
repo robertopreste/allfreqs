@@ -5,4 +5,4 @@ from allfreqs.allfreqs import AlleleFreqs
 
 __author__ = """Roberto Preste"""
 __email__ = "robertopreste@gmail.com"
-__version__ = '0.1.3'
+__version__ = '0.1.4'
