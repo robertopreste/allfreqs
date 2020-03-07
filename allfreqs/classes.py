@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
+from typing import Dict, List, Union
+
+from cached_property import cached_property
 import pandas as pd
-from typing import Dict, List
+from skbio import Sequence
 
 
 class MultiAlignment:
@@ -15,7 +18,7 @@ class MultiAlignment:
     def __init__(self, msa: Dict[str, str]):
         self._msa = msa
 
-    @property
+    @cached_property
     def tabmsa(self) -> pd.DataFrame:
         """Create a dataframe with id and sequence columns.
 
@@ -28,6 +31,9 @@ class MultiAlignment:
 
         return df
 
+    def __len__(self):
+        return self.tabmsa.shape[0]
+
     def __repr__(self):
         return repr(self.tabmsa)
 
@@ -39,10 +45,10 @@ class Reference:
     the reference positions.
     """
 
-    def __init__(self, ref):
+    def __init__(self, ref: Union[str, Sequence]):
         self._ref = str(ref)
 
-    @property
+    @cached_property
     def indexes(self) -> List[str]:
         """Create a set of indexes based on the reference genome.
 
@@ -64,8 +70,8 @@ class Reference:
 
         return indexes
 
-    def __repr__(self):
-        return self._ref
-
     def __len__(self):
         return len(self._ref)
+
+    def __repr__(self):
+        return self._ref

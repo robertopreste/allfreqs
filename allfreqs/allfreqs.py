@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
+from typing import Optional
+
+from cached_property import cached_property
 import pandas as pd
 from skbio import TabularMSA, DNA, Sequence
-from cached_property import cached_property
-from typing import Optional
+
 from allfreqs.classes import Reference, MultiAlignment
 
 
@@ -17,7 +19,7 @@ class AlleleFreqs:
     is needed, either in fasta or csv format.
     """
 
-    def __init__(self, multialg, reference):
+    def __init__(self, multialg: MultiAlignment, reference: Reference):
         self.multialg = multialg
         self.reference = reference
         if len(self.multialg.tabmsa.sequence[0]) != len(self.reference):
@@ -74,16 +76,19 @@ class AlleleFreqs:
             **kwargs: additional options for pandas.read_csv()
         """
         msa = pd.read_csv(sequences, **kwargs)
-        assert msa.shape[1] == 2, ("Please make sure the input only " 
-                                   "contains two columns.")
+        if msa.shape[1] != 2:
+            raise ValueError("Please make sure the input only contains two "
+                             "columns.")
+
         if not reference:
             refer = msa.iloc[0, 1]
             msa = msa.iloc[1:, :]
             multialg = dict(zip(msa.iloc[:, 0], msa.iloc[:, 1]))
         else:
             refer = pd.read_csv(reference, **kwargs)
-            assert refer.shape[1] == 2, ("Please make sure the input only " 
-                                         "contains two columns.")
+            if refer.shape[1] != 2:
+                raise ValueError("Please make sure the input only contains "
+                                 "two columns.")
             refer = refer.iloc[0, 1]
             multialg = dict(zip(msa.iloc[:, 0], msa.iloc[:, 1]))
 
@@ -137,7 +142,6 @@ class AlleleFreqs:
         self.frequencies.to_csv(output_file, index=False)
 
     def __repr__(self):
-        n_seqs = self.multialg.tabmsa.shape[0]
-        n_pos = len(self.reference)
-        return "<AlleleFreqs ({} sequences, {} positions)>".format(n_seqs,
-                                                                   n_pos)
+        return "<{} ({} sequences, {} positions)>".format(
+            self.__class__.__name__, len(self.multialg), len(self.reference)
+        )

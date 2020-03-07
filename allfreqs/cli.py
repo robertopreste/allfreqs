@@ -2,7 +2,9 @@
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
 import sys
+
 import click
+
 from allfreqs import AlleleFreqs
 
 
@@ -31,6 +33,7 @@ def main(input_file, out, reference):
                    "Please provide either a fasta or csv file.")
         return 1
     a.to_csv(out)
+    click.echo(f"Allele frequencies saved to {out}.")
 
     return 0
 
