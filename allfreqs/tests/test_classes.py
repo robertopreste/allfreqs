@@ -8,8 +8,7 @@ from skbio import Sequence
 import pandas.testing as pdtest
 
 from allfreqs.classes import MultiAlignment, Reference
-
-DATADIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+from allfreqs.tests.constants import DATADIR
 
 
 class TestMultiAlignment:

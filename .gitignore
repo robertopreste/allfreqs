@@ -234,3 +234,4 @@ pyvenv.cfg
 pip-selfcheck.json
 
 tests/data/test*
+allfreqs/tests/data/test*
