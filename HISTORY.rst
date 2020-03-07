@@ -26,3 +26,11 @@ History
 * Add dunder methods and sanity checks;
 * Fix requirements and testing framework;
 * Clean code.
+
+0.2.0 (2020-03-07)
+==================
+
+* Remove `numpy` and `pandas` from requirements as they are installed by `scikit-bio`;
+* Move `tests` module inside `allfreqs`;
+* Add `ci` module for internal management;
+* Clean code.
