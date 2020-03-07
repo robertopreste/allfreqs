@@ -9,9 +9,13 @@ import pandas.testing as pdtest
 
 from allfreqs import AlleleFreqs
 from allfreqs.classes import Reference, MultiAlignment
-
-DATADIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
-TEST_CSV = os.path.join(DATADIR, "test.csv")
+from allfreqs.tests.constants import (
+    REAL_ALG_X_FASTA, REAL_ALG_X_NOREF_FASTA, REAL_RSRS_FASTA,
+    REAL_ALG_L6_FASTA, REAL_ALG_L6_NOREF_FASTA,
+    SAMPLE_MULTIALG_FASTA, SAMPLE_MULTIALG_NOREF_FASTA, SAMPLE_REF_FASTA,
+    SAMPLE_MULTIALG_CSV, SAMPLE_MULTIALG_NOREF_CSV, SAMPLE_REF_CSV,
+    TEST_CSV
+)
 
 
 class TestBasic:
@@ -39,9 +43,7 @@ class TestBasic:
 # From Fasta
 
 class TestFromFasta:
-    a = AlleleFreqs.from_fasta(
-        sequences=os.path.join(DATADIR, "sample_multialg.fasta")
-    )
+    a = AlleleFreqs.from_fasta(sequences=SAMPLE_MULTIALG_FASTA)
 
     def test_df(self, sample_sequences_df):
         pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
@@ -56,10 +58,8 @@ class TestFromFasta:
 
 
 class TestFromFastaNoRef:
-    a = AlleleFreqs.from_fasta(
-        sequences=os.path.join(DATADIR, "sample_multialg_noref.fasta"),
-        reference=os.path.join(DATADIR, "sample_ref.fasta")
-    )
+    a = AlleleFreqs.from_fasta(sequences=SAMPLE_MULTIALG_NOREF_FASTA,
+                               reference=SAMPLE_REF_FASTA)
 
     def test_df(self, sample_sequences_df):
         pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
@@ -76,9 +76,7 @@ class TestFromFastaNoRef:
 # From Csv
 
 class TestFromCsv:
-    a = AlleleFreqs.from_csv(
-        sequences=os.path.join(DATADIR, "sample_multialg.csv")
-    )
+    a = AlleleFreqs.from_csv(sequences=SAMPLE_MULTIALG_CSV)
 
     def test_df(self, sample_sequences_df):
         pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
@@ -93,10 +91,8 @@ class TestFromCsv:
 
 
 class TestFromCsvNoRef:
-    a = AlleleFreqs.from_csv(
-        sequences=os.path.join(DATADIR, "sample_multialg_noref.csv"),
-        reference=os.path.join(DATADIR, "sample_ref.csv")
-    )
+    a = AlleleFreqs.from_csv(sequences=SAMPLE_MULTIALG_NOREF_CSV,
+                             reference=SAMPLE_REF_CSV)
 
     def test_df(self, sample_sequences_df):
         pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
@@ -113,9 +109,7 @@ class TestFromCsvNoRef:
 # Real Datasets
 
 class TestRealDatasetsX:
-    a = AlleleFreqs.from_fasta(
-        sequences=os.path.join(DATADIR, "real_datasets", "alg_X.fasta")
-    )
+    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_X_FASTA)
 
     def test_df(self, alg_X_df):
         pdtest.assert_frame_equal(self.a.df, alg_X_df)
@@ -130,10 +124,8 @@ class TestRealDatasetsX:
 
 
 class TestRealDatasetsXNoRef:
-    a = AlleleFreqs.from_fasta(
-        sequences=os.path.join(DATADIR, "real_datasets", "alg_X_noref.fasta"),
-        reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta")
-    )
+    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_X_NOREF_FASTA,
+                               reference=REAL_RSRS_FASTA)
 
     def test_df(self, alg_X_df):
         pdtest.assert_frame_equal(self.a.df, alg_X_df)
@@ -148,9 +140,7 @@ class TestRealDatasetsXNoRef:
 
 
 class TestRealDatasetsL6:
-    a = AlleleFreqs.from_fasta(
-        sequences=os.path.join(DATADIR, "real_datasets", "alg_L6.fasta")
-    )
+    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_L6_FASTA)
 
     def test_df(self, alg_L6_df):
         pdtest.assert_frame_equal(self.a.df, alg_L6_df)
@@ -165,9 +155,8 @@ class TestRealDatasetsL6:
 
 
 class TestRealDatasetsL6NoRef:
-    a = AlleleFreqs.from_fasta(
-        sequences=os.path.join(DATADIR, "real_datasets", "alg_L6_noref.fasta"),
-        reference=os.path.join(DATADIR, "real_datasets", "RSRS.fasta"))
+    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_L6_NOREF_FASTA,
+                               reference=REAL_RSRS_FASTA)
 
     def test_df(self, alg_L6_df):
         pdtest.assert_frame_equal(self.a.df, alg_L6_df)
