@@ -17,13 +17,6 @@ allfreqs
         :target: https://allfreqs.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/robertopreste/allfreqs/python-3-shield.svg
-     :target: https://pyup.io/repos/github/robertopreste/allfreqs/
-     :alt: Python 3
-
-.. image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
-   :target: https://saythanks.io/to/robertopreste
-
 
 Calculate allele frequencies from a sequence multialignment.
 
@@ -38,7 +31,9 @@ Features
 
 Calculate allele frequencies from a nucleotide multialignment in fasta or csv format.
 
-Allele frequencies will be returned as a table in which each row is a nucleotide position (based on the provided reference sequence) and columns are A, C, G, T frequencies as well as gaps and other non-canonical nucleotides.
+Allele frequencies will be returned as a table in which each row is a nucleotide position (based on
+the provided reference sequence) and columns are A, C, G, T frequencies as well as gaps and other
+non-canonical nucleotides.
 
 For example, given the following multialignment:
 
@@ -83,7 +78,9 @@ Installation
 
 **PLEASE NOTE: allfreqs only supports Python >= 3.6!**
 
-The preferred installation method for allfreqs is using ``pip``::
+The preferred installation method for allfreqs is using ``pip``:
+
+.. code-block:: console
 
     $ pip install allfreqs
 
