@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-import os
-import pytest
+import unittest
 
 import pandas as pd
 import pandas.testing as pdtest
@@ -14,157 +13,178 @@ from allfreqs.tests.constants import (
     REAL_ALG_L6_FASTA, REAL_ALG_L6_NOREF_FASTA,
     SAMPLE_MULTIALG_FASTA, SAMPLE_MULTIALG_NOREF_FASTA, SAMPLE_REF_FASTA,
     SAMPLE_MULTIALG_CSV, SAMPLE_MULTIALG_NOREF_CSV, SAMPLE_REF_CSV,
+    SAMPLE_SEQUENCES_DF, SAMPLE_SEQUENCES_FREQS, SAMPLE_FREQUENCIES_CSV,
+    ALG_X_DF, ALG_X_FREQUENCIES_CSV, ALG_L6_DF, ALG_L6_FREQUENCIES_CSV,
     TEST_CSV
 )
 
 
-class TestBasic:
-    ref = Reference("AAG-CTNGGGCATTTCAGGGTGAGCCCGGGCAATACAGGG-TAT")
-    d = {"seq1": "AAGGCTNGGGCATTTCAGGGTGAGCCCGGGCAATACAGGG-TAT",
-         "seq2": "AAGGCCTTGGCAGTGCAGGGTGAGCCGTGGCCGGGCACGGATAT",
-         "seq3": "ACC-GGTTGGCCGTTCAGGGTACAGGTTGGCCGTTCAGGGCTAA",
-         "seq4": "AAA-CCCTTGCCGTTACGCTTAAACCGAGGCCGGGACACT-CAT",
-         "seq5": "AAAGCCCTTGCCGGTACGCTTAAACCATTGCCGGTACGCT-TAA"}
-    alg = MultiAlignment(d)
-    a = AlleleFreqs(multialg=alg, reference=ref)
+class TestBasic(unittest.TestCase):
 
-    def test_df(self, sample_sequences_df):
-        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
+    def setUp(self) -> None:
+        ref = Reference("AAG-CTNGGGCATTTCAGGGTGAGCCCGGGCAATACAGGG-TAT")
+        d = {"seq1": "AAGGCTNGGGCATTTCAGGGTGAGCCCGGGCAATACAGGG-TAT",
+             "seq2": "AAGGCCTTGGCAGTGCAGGGTGAGCCGTGGCCGGGCACGGATAT",
+             "seq3": "ACC-GGTTGGCCGTTCAGGGTACAGGTTGGCCGTTCAGGGCTAA",
+             "seq4": "AAA-CCCTTGCCGTTACGCTTAAACCGAGGCCGGGACACT-CAT",
+             "seq5": "AAAGCCCTTGCCGGTACGCTTAAACCATTGCCGGTACGCT-TAA"}
+        alg = MultiAlignment(d)
 
-    def test_freqs(self, sample_sequences_freqs):
-        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+        self.af = AlleleFreqs(multialg=alg, reference=ref)
 
-    def test_to_csv(self, sample_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, SAMPLE_SEQUENCES_DF)
+
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, SAMPLE_SEQUENCES_FREQS)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, SAMPLE_FREQUENCIES_CSV)
 
 
 # From Fasta
 
-class TestFromFasta:
-    a = AlleleFreqs.from_fasta(sequences=SAMPLE_MULTIALG_FASTA)
+class TestFromFasta(unittest.TestCase):
 
-    def test_df(self, sample_sequences_df):
-        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_fasta(sequences=SAMPLE_MULTIALG_FASTA)
 
-    def test_freqs(self, sample_sequences_freqs):
-        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, SAMPLE_SEQUENCES_DF)
 
-    def test_to_csv(self, sample_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, SAMPLE_SEQUENCES_FREQS)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, SAMPLE_FREQUENCIES_CSV)
 
 
-class TestFromFastaNoRef:
-    a = AlleleFreqs.from_fasta(sequences=SAMPLE_MULTIALG_NOREF_FASTA,
-                               reference=SAMPLE_REF_FASTA)
+class TestFromFastaNoRef(unittest.TestCase):
 
-    def test_df(self, sample_sequences_df):
-        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_fasta(sequences=SAMPLE_MULTIALG_NOREF_FASTA,
+                                         reference=SAMPLE_REF_FASTA)
 
-    def test_freqs(self, sample_sequences_freqs):
-        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, SAMPLE_SEQUENCES_DF)
 
-    def test_to_csv(self, sample_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, SAMPLE_SEQUENCES_FREQS)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, SAMPLE_FREQUENCIES_CSV)
 
 
 # From Csv
 
-class TestFromCsv:
-    a = AlleleFreqs.from_csv(sequences=SAMPLE_MULTIALG_CSV)
+class TestFromCsv(unittest.TestCase):
 
-    def test_df(self, sample_sequences_df):
-        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_csv(sequences=SAMPLE_MULTIALG_CSV)
 
-    def test_freqs(self, sample_sequences_freqs):
-        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, SAMPLE_SEQUENCES_DF)
 
-    def test_to_csv(self, sample_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, SAMPLE_SEQUENCES_FREQS)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, SAMPLE_FREQUENCIES_CSV)
 
 
-class TestFromCsvNoRef:
-    a = AlleleFreqs.from_csv(sequences=SAMPLE_MULTIALG_NOREF_CSV,
-                             reference=SAMPLE_REF_CSV)
+class TestFromCsvNoRef(unittest.TestCase):
 
-    def test_df(self, sample_sequences_df):
-        pdtest.assert_frame_equal(self.a.df, sample_sequences_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_csv(sequences=SAMPLE_MULTIALG_NOREF_CSV,
+                                       reference=SAMPLE_REF_CSV)
 
-    def test_freqs(self, sample_sequences_freqs):
-        pdtest.assert_frame_equal(self.a.frequencies, sample_sequences_freqs)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, SAMPLE_SEQUENCES_DF)
 
-    def test_to_csv(self, sample_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, SAMPLE_SEQUENCES_FREQS)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, sample_frequencies_csv)
+        pdtest.assert_frame_equal(result, SAMPLE_FREQUENCIES_CSV)
 
 
 # Real Datasets
 
-class TestRealDatasetsX:
-    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_X_FASTA)
+class TestRealDatasetsX(unittest.TestCase):
 
-    def test_df(self, alg_X_df):
-        pdtest.assert_frame_equal(self.a.df, alg_X_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_fasta(sequences=REAL_ALG_X_FASTA)
 
-    def test_freqs(self, alg_X_frequencies_csv):
-        pdtest.assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, ALG_X_DF)
 
-    def test_to_csv(self, alg_X_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, ALG_X_FREQUENCIES_CSV)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, alg_X_frequencies_csv)
+        pdtest.assert_frame_equal(result, ALG_X_FREQUENCIES_CSV)
 
 
-class TestRealDatasetsXNoRef:
-    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_X_NOREF_FASTA,
-                               reference=REAL_RSRS_FASTA)
+class TestRealDatasetsXNoRef(unittest.TestCase):
 
-    def test_df(self, alg_X_df):
-        pdtest.assert_frame_equal(self.a.df, alg_X_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_fasta(sequences=REAL_ALG_X_NOREF_FASTA,
+                                         reference=REAL_RSRS_FASTA)
 
-    def test_freqs(self, alg_X_frequencies_csv):
-        pdtest.assert_frame_equal(self.a.frequencies, alg_X_frequencies_csv)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, ALG_X_DF)
 
-    def test_to_csv(self, alg_X_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, ALG_X_FREQUENCIES_CSV)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, alg_X_frequencies_csv)
+        pdtest.assert_frame_equal(result, ALG_X_FREQUENCIES_CSV)
 
 
-class TestRealDatasetsL6:
-    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_L6_FASTA)
+class TestRealDatasetsL6(unittest.TestCase):
 
-    def test_df(self, alg_L6_df):
-        pdtest.assert_frame_equal(self.a.df, alg_L6_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_fasta(sequences=REAL_ALG_L6_FASTA)
 
-    def test_freqs(self, alg_L6_frequencies_csv):
-        pdtest.assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, ALG_L6_DF)
 
-    def test_to_csv(self, alg_L6_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, ALG_L6_FREQUENCIES_CSV)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, alg_L6_frequencies_csv)
+        pdtest.assert_frame_equal(result, ALG_L6_FREQUENCIES_CSV)
 
 
-class TestRealDatasetsL6NoRef:
-    a = AlleleFreqs.from_fasta(sequences=REAL_ALG_L6_NOREF_FASTA,
-                               reference=REAL_RSRS_FASTA)
+class TestRealDatasetsL6NoRef(unittest.TestCase):
 
-    def test_df(self, alg_L6_df):
-        pdtest.assert_frame_equal(self.a.df, alg_L6_df)
+    def setUp(self) -> None:
+        self.af = AlleleFreqs.from_fasta(sequences=REAL_ALG_L6_NOREF_FASTA,
+                                         reference=REAL_RSRS_FASTA)
 
-    def test_freqs(self, alg_L6_frequencies_csv):
-        pdtest.assert_frame_equal(self.a.frequencies, alg_L6_frequencies_csv)
+    def test_df(self):
+        pdtest.assert_frame_equal(self.af.df, ALG_L6_DF)
 
-    def test_to_csv(self, alg_L6_frequencies_csv):
-        self.a.to_csv(TEST_CSV)
+    def test_frequencies(self):
+        pdtest.assert_frame_equal(self.af.frequencies, ALG_L6_FREQUENCIES_CSV)
+
+    def test_to_csv(self):
+        self.af.to_csv(TEST_CSV)
         result = pd.read_csv(TEST_CSV)
-        pdtest.assert_frame_equal(result, alg_L6_frequencies_csv)
+        pdtest.assert_frame_equal(result, ALG_L6_FREQUENCIES_CSV)
