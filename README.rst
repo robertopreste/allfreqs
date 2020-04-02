@@ -69,6 +69,9 @@ the resulting allele frequencies will be:
 | 8.0_T    | 0.0 | 0.0 | 0.0 | 0.5 | 0.0 | 0.5 |
 +----------+-----+-----+-----+-----+-----+-----+
 
+Frequencies of non-canonical (ambiguous) nucleotides are by default squashed into the ``oth``
+column, but they can also be shown separately using a simple flag.
+
 allfreqs can be used either as a command line tool or through its Python API.
 
 For more information, please refer to the Usage_ section of the documentation.

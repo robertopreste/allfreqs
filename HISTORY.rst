@@ -34,3 +34,8 @@ History
 * Move `tests` module inside `allfreqs`;
 * Add `ci` module for internal management;
 * Clean code.
+
+0.3.0 (2020-04-02)
+==================
+
+* Add option to allow ambiguous nucleotides shown separately.
