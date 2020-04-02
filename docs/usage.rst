@@ -28,6 +28,10 @@ the fasta or csv file with the desired reference sequence to use. **Please note 
 both multialigned sequences and reference sequence must be in the same format (both fasta or csv
 files).**
 
+By default, allfreqs will add frequencies of non-standard (ambiguous) nucleotides together, showing
+them in the ``oth`` column of the output; it is possible to show them in separate columns, specific
+for each of them, using the ``--ambiguous`` flag.
+
 allfreqs will calculate allele frequencies for each position in the multialignment and save them as
 a csv file called ``all_freqs.csv`` in the current working directory. It is possible to specify a
 different output location using the ``--out|-o`` option followed by the desired path/filename.
@@ -63,6 +67,10 @@ The ``AlleleFreqs`` class has two useful properties:
 
 - ``df``, which returns a dataframe with sequences as rows and single positions as columns;
 - ``frequencies``, which returns a dataframe with the actual allele frequencies for each position.
+
+By default, allfreqs will add frequencies of non-standard (ambiguous) nucleotides together, showing
+them in the ``oth`` column of the output; it is possible to show them in separate columns, specific
+for each of them, using the ``ambiguous=True`` option.
 
 These allele frequencies can be saved to a csv file using the ``.to_csv()`` method; by default they
 will be saved to a file called ``all_freqs.csv`` in the current working directory, but this can be
