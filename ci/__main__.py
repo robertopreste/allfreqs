@@ -26,7 +26,7 @@ def build():
     eggs_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)),
                             ".eggs")
     egg_info_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                                "mitoviz.egg-info")
+                                "allfreqs.egg-info")
 
     if os.path.isdir(build_dir):
         click.echo("Removing build directory... ", nl=False)
@@ -75,14 +75,14 @@ def docs():
 def flake8():
     """ Perform flake8 checks on the code. """
     click.echo("Performing flake8 linting...")
-    subprocess.check_call(["flake8", "mitoviz"])
+    subprocess.check_call(["flake8", "allfreqs"])
     click.echo("Done.")
 
 
 @cli.command(name="install")
 def install():
     """ Install the package (in development mode). """
-    click.echo("Installing mitoviz...")
+    click.echo("Installing allfreqs...")
     subprocess.check_call(["pip", "install", "-e", "."])
     click.echo("Done.")
 
@@ -91,7 +91,7 @@ def install():
 def install_reqs():
     """ Install all requirements needed for the package. """
     click.echo(
-        "Installing requirements for mitoviz..."
+        "Installing requirements for allfreqs..."
     )
     subprocess.check_call(["pip", "install", "-r", "requirements.txt"])
     click.echo("Done.")
